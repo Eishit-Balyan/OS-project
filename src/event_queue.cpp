@@ -1,9 +1,9 @@
 /**
  * ============================================================================
- * SentinelFS - Thread-Safe Bounded Event Queue Implementation
+ * Warden - Thread-Safe Bounded Event Queue Implementation
  * Module Purpose: Real POSIX pthread bounded queue synchronization with
  *                 mutex and condition variables, plus worker thread lifecycle.
- * Owner: Vaibhav
+ * Owner: Krishna + Ashutosh
  * ============================================================================
  */
 

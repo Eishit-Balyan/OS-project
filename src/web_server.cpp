@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SentinelFS - Decoupled HTTP API & Forensic Web Ledger Server
+ * Warden - Decoupled HTTP API & Forensic Web Ledger Server
  * Module Purpose: Standalone C++17 POSIX socket HTTP server serving JSON APIs,
  *                 Server-Sent Events (SSE) tailing events.log, CSV exports,
  *                 and offline static forensic ledger frontend files.
@@ -459,7 +459,7 @@ static void handle_api_status(int client_fd, const WebServerConfig& config) {
     // 1. Daemon check via pidfile + kill(pid, 0)
     pid_t daemon_pid = 0;
     bool is_running = false;
-    std::string pid_path = config_get_default_dir() + "/sentinelfs.pid";
+    std::string pid_path = config_get_default_dir() + "/warden.pid";
     std::ifstream pid_in(pid_path);
     if (pid_in.is_open()) {
         pid_in >> daemon_pid;
@@ -516,7 +516,7 @@ static void handle_api_status(int client_fd, const WebServerConfig& config) {
         }
     }
 
-    // 2. Read ~/.sentinelfs/stats.json
+    // 2. Read ~/.warden/stats.json
     std::string stats_path = config_get_default_dir() + "/stats.json";
     bool has_live_stats = false;
     long stats_age_sec = -1;
@@ -839,7 +839,7 @@ static void handle_api_export_csv(int client_fd, const std::unordered_map<std::s
            << "\"" << it->detail << "\"\n";
     }
 
-    std::string extra = "Content-Disposition: attachment; filename=\"sentinelfs-events.csv\"\r\n";
+    std::string extra = "Content-Disposition: attachment; filename=\"warden-events.csv\"\r\n";
     send_response(client_fd, 200, "OK", "text/csv; charset=utf-8", ss.str(), extra);
 }
 
@@ -1067,7 +1067,7 @@ int web_server_run(const WebServerConfig& config) {
     }
 
     std::string web_dir = resolve_web_dir(config.web_dir);
-    std::cout << ui_success_mark() << " SentinelFS Forensic Web Ledger running on http://127.0.0.1:"
+    std::cout << ui_success_mark() << " Warden Forensic Web Ledger running on http://127.0.0.1:"
               << config.port << "\n"
               << "  -> Static web directory: " << web_dir << "\n"
               << "  -> Cap connections: " << MAX_WEB_CONNECTIONS << "\n"
@@ -1128,6 +1128,6 @@ int web_server_run(const WebServerConfig& config) {
     }
 
     close(listen_fd);
-    std::cout << ui_success_mark() << " SentinelFS Web Server stopped cleanly.\n";
+    std::cout << ui_success_mark() << " Warden Web Server stopped cleanly.\n";
     return 0;
 }

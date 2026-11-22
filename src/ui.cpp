@@ -1,10 +1,10 @@
 /**
  * ============================================================================
- * SentinelFS - Modern Terminal UI & Formatting Implementation
+ * Warden - Modern Terminal UI & Formatting Implementation
  * Module Purpose: Real terminal capability checking, 256-color ANSI palettes,
  *                 UTF-8 rounded boxes (╭─╮ ╰─╯), visual cell-width alignment,
  *                 and a modern, tear-free live monitoring TUI dashboard.
- * Owner: Shared
+ * Owner: Eishit + Ashutosh
  * ============================================================================
  */
 
@@ -81,20 +81,20 @@ std::string ui_pad_left(const std::string& str, size_t target_width) {
 void ui_print_banner() {
     if (!ui_colors_enabled()) {
         std::cout << "========================================================\n"
-                  << "  SentinelFS - Real-Time File Integrity Monitor v1.0.0\n"
+                  << "  Warden - Real-Time File Integrity Monitor v1.0.0\n"
                   << "========================================================\n";
         return;
     }
     std::cout << "\033[38;5;67m"
               << "  ╭────────────────────────────────────────────────────────────╮\n"
-              << "  │   \033[38;5;81m░█▀▀░█▀▀░█▀▄░▀█▀░▀█▀░█▀▄░█▀▀░█░░░█▀▀░█▀▀\033[38;5;67m   \033[1;38;5;141mv1.0.0\033[38;5;67m        │\n"
-              << "  │   \033[38;5;117m░▀▀█░█▀▀░█░█░░█░░░█░░█░█░█▀▀░█░░░█▀▀░▀▀█\033[38;5;67m   \033[38;5;244mLinux Host    \033[38;5;67m│\n"
-              << "  │   \033[38;5;123m░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░▀░▀▀▀░▀▀▀░▀░░░▀▀▀\033[38;5;67m   \033[38;5;250mIntegrity     \033[38;5;67m│\n"
+              << "  │   \033[38;5;81m    ░█░░░█░█▀▀█░█▀▀▄░█▀▀▄░█▀▀▀░█▀▀▄░    \033[38;5;67m   \033[1;38;5;141mv1.0.0\033[38;5;67m        │\n"
+              << "  │   \033[38;5;117m    ░█░█░█░█▄▄█░█▄▄▀░█░░█░█▀▀░░█░░█░    \033[38;5;67m   \033[38;5;244mLinux Host    \033[38;5;67m│\n"
+              << "  │   \033[38;5;123m    ░▀▄▀▄▀░▀░░▀░▀░░▀░▀▀▀░░▀▀▀▀░▀░░▀░    \033[38;5;67m   \033[38;5;250mIntegrity     \033[38;5;67m│\n"
               << "  ╰────────────────────────────────────────────────────────────╯\033[0m\n";
 }
 
 void ui_print_version() {
-    std::cout << "SentinelFS v1.0.0 (Linux x86_64 POSIX inotify engine)\n";
+    std::cout << "Warden v1.0.0 (Linux x86_64 POSIX inotify engine)\n";
 }
 
 std::string ui_badge(Severity severity) {
@@ -374,10 +374,10 @@ void ui_render_dashboard() {
     buf << "\033[H";
 
     // Header bar
-    buf << b_col << "╭─ " << t_col << "SentinelFS Host Integrity Daemon "
+    buf << b_col << "╭─ " << t_col << "Warden Host Integrity Daemon "
         << "\033[38;5;120m● ACTIVE "
         << b_col;
-    size_t top_len = ui_visible_len("SentinelFS Host Integrity Daemon ● ACTIVE ") + 4;
+    size_t top_len = ui_visible_len("Warden Host Integrity Daemon ● ACTIVE ") + 4;
     for (size_t i = top_len; i < BOX_WIDTH - 1; ++i) buf << "─";
     buf << "╮\n";
 
@@ -477,6 +477,6 @@ void ui_stats_dump_summary() {
                     " | WARNING: " + std::to_string(g_stats.counts_by_severity[WARNING]) +
                     " | CRITICAL: " + std::to_string(g_stats.counts_by_severity[CRITICAL]));
     lines.push_back("Peak Queue Depth: " + std::to_string(g_stats.queue_depth));
-    ui_draw_box("SentinelFS Shutdown Summary", lines);
+    ui_draw_box("Warden Shutdown Summary", lines);
     pthread_mutex_unlock(&g_stats.mutex);
 }

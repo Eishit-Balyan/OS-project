@@ -2,7 +2,7 @@
 set -u
 
 echo "========================================================"
-echo "      SentinelFS Integration Test Suite Runner         "
+echo "      Warden Integration Test Suite Runner         "
 echo "========================================================"
 
 TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -10,8 +10,8 @@ ROOT_DIR="$(cd "$TEST_DIR/.." && pwd)"
 
 cd "$ROOT_DIR"
 
-if [ ! -f "./sentinelfs" ]; then
-    echo "Executable './sentinelfs' not found. Building with make..."
+if [ ! -f "./warden" ]; then
+    echo "Executable './warden' not found. Building with make..."
     make
 fi
 

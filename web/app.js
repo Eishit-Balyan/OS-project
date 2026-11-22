@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SentinelFS - Forensic Ledger Client Script
+ * Warden - Forensic Ledger Client Script
  * Zero external frameworks, 100% offline, strict textContent DOM rendering.
  * Real data only; empty state on missing data; no mock or simulated values.
  * ============================================================================

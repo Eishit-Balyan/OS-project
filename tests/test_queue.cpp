@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SentinelFS - Concurrent EventQueue Stress Test
+ * Warden - Concurrent EventQueue Stress Test
  * Module Purpose: Validates multithreaded EventQueue push/pop under heavy
  *                 concurrency with raw POSIX pthreads. Verifies that zero
  *                 items are lost or duplicated.

@@ -1,13 +1,13 @@
-#ifndef SENTINELFS_UI_H
-#define SENTINELFS_UI_H
+#ifndef WARDEN_UI_H
+#define WARDEN_UI_H
 
 /**
  * ============================================================================
- * SentinelFS - Modern Terminal UI & Formatting Module
+ * Warden - Modern Terminal UI & Formatting Module
  * Module Purpose: Terminal capability detection, 256-color / ANSI palettes,
  *                 modern rounded UTF-8 box drawing, badges, progress bars,
  *                 table rendering, visual width calculations, and live TUI dashboard.
- * Owner: Shared
+ * Owner: Eishit + Ashutosh
  * ============================================================================
  */
 
@@ -83,4 +83,4 @@ void ui_render_dashboard();
 void ui_print_alert_line(const ClassifiedEvent& ce);
 void ui_stats_dump_summary();
 
-#endif // SENTINELFS_UI_H
+#endif // WARDEN_UI_H

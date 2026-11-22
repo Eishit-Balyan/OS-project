@@ -1,11 +1,11 @@
-#ifndef SENTINELFS_COMMON_H
-#define SENTINELFS_COMMON_H
+#ifndef WARDEN_COMMON_H
+#define WARDEN_COMMON_H
 
 /**
  * ============================================================================
- * SentinelFS - Shared Types and Declarations
+ * Warden - Shared Types and Declarations
  * Module Purpose: Common data structures, enumerations, configuration records,
- *                 and serialization contracts shared across all SentinelFS
+ *                 and serialization contracts shared across all Warden
  *                 modules.
  * Owner: Shared
  * ============================================================================
@@ -129,4 +129,4 @@ bool line_to_classified_event(const std::string& line, ClassifiedEvent& out_even
 // Formats epoch timestamp to local "YYYY-MM-DD HH:MM:SS"
 std::string format_time(time_t t);
 
-#endif // SENTINELFS_COMMON_H
+#endif // WARDEN_COMMON_H

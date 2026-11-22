@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 TEST_DIR=$(mktemp -d)
 export HOME=$(mktemp -d)
-trap 'kill $(cat "$HOME/.sentinelfs/sentinelfs.pid" 2>/dev/null) 2>/dev/null || true; rm -rf "$TEST_DIR" "$HOME"' EXIT
+trap 'kill $(cat "$HOME/.warden/warden.pid" 2>/dev/null) 2>/dev/null || true; rm -rf "$TEST_DIR" "$HOME"' EXIT
 
 mkdir -p "$TEST_DIR/watched"
-./sentinelfs add "$TEST_DIR/watched" > /dev/null 2>&1
-./sentinelfs baseline > /dev/null 2>&1
+./warden add "$TEST_DIR/watched" > /dev/null 2>&1
+./warden baseline > /dev/null 2>&1
 
-./sentinelfs watch > /dev/null 2>&1 &
+./warden watch > /dev/null 2>&1 &
 WATCH_PID=$!
 sleep 1
 
@@ -20,7 +20,7 @@ sleep 3
 kill -SIGINT "$WATCH_PID" 2>/dev/null || true
 wait "$WATCH_PID" 2>/dev/null || true
 
-LOG_FILE="$HOME/.sentinelfs/events.log"
+LOG_FILE="$HOME/.warden/events.log"
 COUNT=$(wc -l < "$LOG_FILE" 2>/dev/null || echo 0)
 
 if [ "$COUNT" -gt 0 ]; then

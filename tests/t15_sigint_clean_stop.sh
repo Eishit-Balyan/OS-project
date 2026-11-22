@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 TEST_DIR=$(mktemp -d)
 export HOME=$(mktemp -d)
-PID_FILE="$HOME/.sentinelfs/sentinelfs.pid"
+PID_FILE="$HOME/.warden/warden.pid"
 trap 'kill $(cat "$PID_FILE" 2>/dev/null) 2>/dev/null || true; rm -rf "$TEST_DIR" "$HOME"' EXIT
 
 mkdir -p "$TEST_DIR/watched"
 echo "data" > "$TEST_DIR/watched/f.txt"
-./sentinelfs add "$TEST_DIR/watched" > /dev/null 2>&1
-./sentinelfs baseline > /dev/null 2>&1
+./warden add "$TEST_DIR/watched" > /dev/null 2>&1
+./warden baseline > /dev/null 2>&1
 
-./sentinelfs watch > /dev/null 2>&1 &
+./warden watch > /dev/null 2>&1 &
 WATCH_PID=$!
 sleep 1
 

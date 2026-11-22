@@ -1,26 +1,26 @@
-#ifndef SENTINELFS_CONFIG_H
-#define SENTINELFS_CONFIG_H
+#ifndef WARDEN_CONFIG_H
+#define WARDEN_CONFIG_H
 
 /**
  * ============================================================================
- * SentinelFS - Configuration Management Module
+ * Warden - Configuration Management Module
  * Module Purpose: Real configuration management for protected directories,
  *                 ignore patterns, critical security paths, and thresholds.
- *                 Handles ~/.sentinelfs/ directory creation and key=value config.
- * Owner: Arjun
+ *                 Handles ~/.warden/ directory creation and key=value config.
+ * Owner: Aviral
  * ============================================================================
  */
 
 #include "common.h"
 #include <string>
 
-// Returns the default directory path (~/.sentinelfs)
+// Returns the default directory path (~/.warden)
 std::string config_get_default_dir();
 
-// Returns the default configuration file path (~/.sentinelfs/config)
+// Returns the default configuration file path (~/.warden/config)
 std::string config_get_default_path();
 
-// Ensures ~/.sentinelfs directory exists with proper permissions (0700)
+// Ensures ~/.warden directory exists with proper permissions (0700)
 bool config_ensure_dir_exists();
 
 // Loads key=value configuration from disk into config; creates default if missing
@@ -45,4 +45,4 @@ bool config_validate_path(const std::string& path);
 // Checks if a given path or filename matches any configured ignore patterns via fnmatch()
 bool config_is_ignored(const Config& config, const std::string& path);
 
-#endif // SENTINELFS_CONFIG_H
+#endif // WARDEN_CONFIG_H

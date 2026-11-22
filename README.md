@@ -1,6 +1,6 @@
-# SentinelFS
+# Warden
 
-SentinelFS is a real-time file integrity monitoring and tamper detection daemon for Linux. It combines POSIX filesystem metadata observation, recursive directory inotify event streaming, OpenSSL cryptographic baseline verification, multithreaded worker pools, and sliding-window anomaly analysis.
+Warden is a real-time file integrity monitoring and tamper detection daemon for Linux. It combines POSIX filesystem metadata observation, recursive directory inotify event streaming, OpenSSL cryptographic baseline verification, multithreaded worker pools, and sliding-window anomaly analysis.
 
 ---
 
@@ -60,7 +60,7 @@ sudo apt update && sudo apt install -y build-essential libssl-dev
 
 ### Compilation Targets
 ```bash
-make            # Build standard release executable (./sentinelfs)
+make            # Build standard release executable (./warden)
 make debug      # Build with debug symbols and no optimizations (-g -O0)
 make tsan       # Build with ThreadSanitizer (-fsanitize=thread -g)
 make test       # Build all targets and run the test suite
@@ -75,45 +75,45 @@ make clean      # Remove all build artifacts and binaries
 
 | Subcommand | Syntax | Description |
 | :--- | :--- | :--- |
-| `add` | `./sentinelfs add <dir>` | Add directory to protected monitoring list |
-| `remove` | `./sentinelfs remove <dir>` | Remove directory from protected monitoring list |
-| `list` | `./sentinelfs list` | List all protected directories and active patterns |
-| `baseline` | `./sentinelfs baseline` | Establish cryptographic baseline snapshot with sidecar hash |
-| `verify` | `./sentinelfs verify` | Scan live directories and compare against baseline in parallel |
-| `watch` | `./sentinelfs watch` | Start real-time monitoring engine with live TUI dashboard |
-| `web` | `./sentinelfs web [--port P] [--web-dir D]` | Start decoupled Forensic Web Ledger server (default port 8787) |
-| `events` | `./sentinelfs events [flags]` | Display audit event log with filtering |
-| `report` | `./sentinelfs report [flags]` | Generate comprehensive audit report with bar charts & export |
-| `status` | `./sentinelfs status` | View running daemon status, memory, CPU, and diagnostics |
+| `add` | `./warden add <dir>` | Add directory to protected monitoring list |
+| `remove` | `./warden remove <dir>` | Remove directory from protected monitoring list |
+| `list` | `./warden list` | List all protected directories and active patterns |
+| `baseline` | `./warden baseline` | Establish cryptographic baseline snapshot with sidecar hash |
+| `verify` | `./warden verify` | Scan live directories and compare against baseline in parallel |
+| `watch` | `./warden watch` | Start real-time monitoring engine with live TUI dashboard |
+| `web` | `./warden web [--port P] [--web-dir D]` | Start decoupled Forensic Web Ledger server (default port 8787) |
+| `events` | `./warden events [flags]` | Display audit event log with filtering |
+| `report` | `./warden report [flags]` | Generate comprehensive audit report with bar charts & export |
+| `status` | `./warden status` | View running daemon status, memory, CPU, and diagnostics |
 
 ### Filtering Events
 ```bash
-./sentinelfs events --severity CRITICAL
-./sentinelfs events --type MODIFIED --since 30m
-./sentinelfs events --path /etc --limit 20 --tail
+./warden events --severity CRITICAL
+./warden events --type MODIFIED --since 30m
+./warden events --path /etc --limit 20 --tail
 ```
 
 ### Decoupled Forensic Web Ledger
-SentinelFS includes a standalone, zero-framework HTTP server and "Forensic Ledger" browser UI:
+Warden includes a standalone, zero-framework HTTP server and "Forensic Ledger" browser UI:
 ```bash
 # Run web server on default port 8787 (runs as its own decoupled process)
-./sentinelfs web
+./warden web
 
 # Or specify custom port and static files directory
-./sentinelfs web --port 8787 --web-dir ./web
+./warden web --port 8787 --web-dir ./web
 ```
 - **Access on WSL2 / Windows**: Open `http://localhost:8787` in any browser on your Windows host.
-- **Decoupled Architecture**: Reads real files written by the daemon (`~/.sentinelfs/events.log`, `stats.json`, `baseline.db`, `/proc/<pid>`). Functions whether or not `watch` is currently active.
+- **Decoupled Architecture**: Reads real files written by the daemon (`~/.warden/events.log`, `stats.json`, `baseline.db`, `/proc/<pid>`). Functions whether or not `watch` is currently active.
 - **Zero Mock Data**: When no events exist or the daemon is idle, displays verified empty states ("The ledger is quiet").
 - **Live Ingest Streaming**: Real-time updates delivered via Server-Sent Events (SSE) `GET /api/stream` with automatic fallback to polling.
 
 ### Comprehensive Reporting & Export
 ```bash
 # Display terminal summary with block charts
-./sentinelfs report
+./warden report
 
 # Export to CSV and standalone dark-themed HTML
-./sentinelfs report --csv audit.csv --html audit_report.html
+./warden report --csv audit.csv --html audit_report.html
 ```
 
 ---
@@ -122,15 +122,15 @@ SentinelFS includes a standalone, zero-framework HTTP server and "Forensic Ledge
 
 | Module | Owner | Description |
 | :--- | :--- | :--- |
-| `config` | Arjun | Protected directory management, path validation, nesting rejection, key=value parser |
-| `baseline` | Gaurav | Recursive directory scanning, lstat metadata extraction, OpenSSL streaming SHA-256 |
-| `monitor` | Vaibhav | inotify recursive engine, cookie-based move pairing, self-pipe shutdown unblocking |
-| `event_queue` | Vaibhav | Bounded multithreaded queue with POSIX mutex and condition variables, worker pool |
-| `classifier` | Ayaansh | Security assessment, false-alarm pruning, permission/ownership diffs, critical paths |
-| `logger` | Ayaansh | Mutex-synchronized TSV event logger, ANSI console alerts, syslog(LOG_ALERT) |
-| `analyzer` | Arjun & Ayaansh | Sliding-window burst detection, ransomware / mass modification detection |
-| `report` | Arjun & Ayaansh | Log querying, CLI formatting, block character charts, CSV and dark-mode HTML export |
-| `ui` | Shared | TUI box drawing, colored badges, progress bars, live monitor dashboard |
+| `config` | Aviral | Protected directory management, path validation, nesting rejection, key=value parser |
+| `baseline` | Krishna | Recursive scanning, lstat metadata extraction, OpenSSL streaming SHA-256 |
+| `monitor` | Eishit | inotify recursive engine, cookie-based move pairing, self-pipe shutdown |
+| `event_queue` | Krishna + Ashutosh| Bounded multithreaded queue, POSIX mutex, condition variables, worker pool |
+| `classifier` | Ashutosh | Security assessment, false-alarm pruning, permission/ownership differences, critical paths |
+| `logger` | Aviral | Mutex-synchronized TSV logger, ANSI console alerts, syslog |
+| `analyzer` | Eishit | Sliding-window burst detection, ransomware/mass modification detection |
+| `report` | Krishna + Aviral| Log querying, CLI formatting, block charts, CSV and dark-mode HTML export |
+| `ui` | Eishit + Ashutosh | TUI box drawing, colored badges, progress bars, live monitoring dashboard |
 
 ---
 
@@ -166,7 +166,7 @@ make test
 To run a live demonstration of attack detection:
 ```bash
 # In Terminal 1:
-./sentinelfs watch
+./warden watch
 
 # In Terminal 2:
 bash tests/simulate_attack.sh /tmp/demo_protected
@@ -177,6 +177,6 @@ bash tests/simulate_attack.sh /tmp/demo_protected
 ## Known Limitations
 
 1. **Linux Platform Requirement**: Relies directly on Linux kernel inotify (`sys/inotify.h`) and POSIX system calls. Not portable to macOS or native Windows (works under WSL2).
-2. **Terminal Dashboard Backup**: The terminal TUI dashboard (`./sentinelfs watch`) remains fully operational and untouched as an independent in-terminal monitoring backup.
+2. **Terminal Dashboard Backup**: The terminal TUI dashboard (`./warden watch`) remains fully operational and untouched as an independent in-terminal monitoring backup.
 3. **Log Protection Boundary**: The audit log `events.log` is maintained on the local host with standard filesystem permissions; high-assurance deployments should replicate logs remotely or use an append-only hardware module.
 4. **Directory Watch Limits**: The total number of monitored directories is bounded by the Linux kernel `fs.inotify.max_user_watches` system setting. Protect only authorized directories rather than the entire root filesystem.

@@ -5,10 +5,10 @@ trap 'rm -rf "$TEST_DIR" "$HOME"' EXIT
 
 mkdir -p "$TEST_DIR/watched"
 echo "clean state" > "$TEST_DIR/watched/clean.txt"
-./sentinelfs add "$TEST_DIR/watched" > /dev/null 2>&1
-./sentinelfs baseline > /dev/null 2>&1
+./warden add "$TEST_DIR/watched" > /dev/null 2>&1
+./warden baseline > /dev/null 2>&1
 
-if ./sentinelfs verify > /dev/null 2>&1; then
+if ./warden verify > /dev/null 2>&1; then
     echo "[PASS] T08: Unchanged files report clean verification"
     exit 0
 else

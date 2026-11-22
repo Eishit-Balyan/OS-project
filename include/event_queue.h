@@ -1,12 +1,12 @@
-#ifndef SENTINELFS_EVENT_QUEUE_H
-#define SENTINELFS_EVENT_QUEUE_H
+#ifndef WARDEN_EVENT_QUEUE_H
+#define WARDEN_EVENT_QUEUE_H
 
 /**
  * ============================================================================
- * SentinelFS - Thread-Safe Bounded Event Queue & Worker Pool Module
+ * Warden - Thread-Safe Bounded Event Queue & Worker Pool Module
  * Module Purpose: Provides a bounded producer-consumer queue synchronized
  *                 using raw POSIX pthreads and controls the worker thread pool.
- * Owner: Vaibhav
+ * Owner: Krishna + Ashutosh
  * ============================================================================
  */
 
@@ -59,4 +59,4 @@ bool worker_pool_start(int n, EventQueue& queue, const Config& config);
 // Signals shutdown and joins all active worker pthreads
 void worker_pool_stop();
 
-#endif // SENTINELFS_EVENT_QUEUE_H
+#endif // WARDEN_EVENT_QUEUE_H

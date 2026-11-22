@@ -1,6 +1,6 @@
-# SentinelFS - Architecture & Design Specification
+# Warden - Architecture & Design Specification
 
-SentinelFS is a real-time file integrity monitoring and tamper detection daemon for Linux. It combines POSIX filesystem metadata observation, recursive directory inotify event streaming, OpenSSL cryptographic baseline verification, and sliding-window anomaly analysis.
+Warden is a real-time file integrity monitoring and tamper detection daemon for Linux. It combines POSIX filesystem metadata observation, recursive directory inotify event streaming, OpenSSL cryptographic baseline verification, and sliding-window anomaly analysis.
 
 ---
 
@@ -9,7 +9,7 @@ SentinelFS is a real-time file integrity monitoring and tamper detection daemon 
 All persistent runtime state, configuration, and audit trails reside under a dedicated directory in the user's home folder:
 
 ```text
-~/.sentinelfs/
+~/.warden/
 ├── config        # Key-value configuration file
 ├── baseline.db   # Snapshot database of monitored files & cryptographic hashes
 └── events.log    # Append-only tab-separated audit log of detected events
@@ -21,7 +21,7 @@ The home directory path is resolved dynamically at runtime from the `HOME` envir
 
 ## 2. File Formats
 
-### 2.1 Configuration File (`~/.sentinelfs/config`)
+### 2.1 Configuration File (`~/.warden/config`)
 
 The configuration file uses line-oriented `key=value` pairs.
 - Empty lines and lines starting with `#` are treated as comments and ignored.
@@ -39,7 +39,7 @@ The configuration file uses line-oriented `key=value` pairs.
 
 #### Default Settings:
 ```ini
-# SentinelFS Default Configuration
+# Warden Default Configuration
 worker_count=4
 queue_capacity=1024
 burst_threshold=20
@@ -59,10 +59,10 @@ critical=/etc/ssh/sshd_config
 
 ---
 
-### 2.2 Baseline Database (`~/.sentinelfs/baseline.db`)
+### 2.2 Baseline Database (`~/.warden/baseline.db`)
 
 The baseline database stores a cryptographic snapshot of the protected directories.
-- Line 1: Header identifying format and version: `#SENTINELFS-BASELINE v1`
+- Line 1: Header identifying format and version: `#WARDEN-BASELINE v1`
 - Line 2: Creation timestamp metadata: `#CREATED <epoch>`
 - Subsequent lines: One record per file encoded as 9 Tab-Separated Values (TSV).
 
@@ -81,14 +81,14 @@ The baseline database stores a cryptographic snapshot of the protected directori
 
 #### Example Record:
 ```text
-#SENTINELFS-BASELINE v1
+#WARDEN-BASELINE v1
 #CREATED 1731780000
 /etc/passwd	2840	100644	0	0	1731000000	1731000000	131075	b7a8f...
 ```
 
 ---
 
-### 2.3 Event Audit Log (`~/.sentinelfs/events.log`)
+### 2.3 Event Audit Log (`~/.warden/events.log`)
 
 The event log is an append-only, mutex-synchronized audit log recording every classified filesystem event. Each line consists of 6 Tab-Separated Values (TSV).
 

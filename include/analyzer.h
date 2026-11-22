@@ -1,13 +1,13 @@
-#ifndef SENTINELFS_ANALYZER_H
-#define SENTINELFS_ANALYZER_H
+#ifndef WARDEN_ANALYZER_H
+#define WARDEN_ANALYZER_H
 
 /**
  * ============================================================================
- * SentinelFS - Behavioral Anomaly Analyzer Module
+ * Warden - Behavioral Anomaly Analyzer Module
  * Module Purpose: Real sliding-window burst detection for rapid modification
  *                 bursts (ransomware/mass-tamper activity), with repeat alert
  *                 suppression within the window.
- * Owner: Arjun & Ayaansh
+ * Owner: Eishit
  * ============================================================================
  */
 
@@ -21,4 +21,4 @@ void analyzer_record(const ClassifiedEvent& event, const Config& config);
 // Resets internal burst analyzer state
 void analyzer_reset();
 
-#endif // SENTINELFS_ANALYZER_H
+#endif // WARDEN_ANALYZER_H

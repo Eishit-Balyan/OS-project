@@ -1,10 +1,10 @@
 /**
  * ============================================================================
- * SentinelFS - Real-Time Filesystem Monitor Implementation
+ * Warden - Real-Time Filesystem Monitor Implementation
  * Module Purpose: Real Linux inotify event monitoring with recursive watch
  *                 descriptor registration, self-pipe shutdown unblocking,
  *                 cookie-based rename/move pairing, and queue overflow recovery.
- * Owner: Vaibhav
+ * Owner: Eishit
  * ============================================================================
  */
 

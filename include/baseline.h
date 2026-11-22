@@ -1,13 +1,13 @@
-#ifndef SENTINELFS_BASELINE_H
-#define SENTINELFS_BASELINE_H
+#ifndef WARDEN_BASELINE_H
+#define WARDEN_BASELINE_H
 
 /**
  * ============================================================================
- * SentinelFS - Baseline Management Module
+ * Warden - Baseline Management Module
  * Module Purpose: Recursive directory scanning, POSIX metadata extraction (lstat),
  *                 streaming OpenSSL SHA-256 calculation, atomic DB persistence,
  *                 sidecar hash verification, and parallel multi-threaded verify.
- * Owner: Gaurav
+ * Owner: Krishna
  * ============================================================================
  */
 
@@ -42,10 +42,10 @@ bool baseline_compute_record(const std::string& path, BaselineRecord& out);
 // Rescans protected directories and compares against baseline using parallel workers
 bool baseline_verify_against_disk(const Config& config, const std::string& baseline_path);
 
-// Returns default baseline database path (~/.sentinelfs/baseline.db)
+// Returns default baseline database path (~/.warden/baseline.db)
 std::string baseline_get_default_path();
 
 // Returns number of records currently loaded in memory
 size_t baseline_get_record_count();
 
-#endif // SENTINELFS_BASELINE_H
+#endif // WARDEN_BASELINE_H

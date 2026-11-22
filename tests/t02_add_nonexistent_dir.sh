@@ -2,7 +2,7 @@
 export HOME=$(mktemp -d)
 trap 'rm -rf "$HOME"' EXIT
 
-if ./sentinelfs add /path/to/definitely_non_existent_directory_99999 > /dev/null 2>&1; then
+if ./warden add /path/to/definitely_non_existent_directory_99999 > /dev/null 2>&1; then
     echo "[FAIL] T02: Add nonexistent directory should have failed"
     exit 1
 else

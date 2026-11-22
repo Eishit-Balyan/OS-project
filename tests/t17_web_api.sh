@@ -2,13 +2,13 @@
 set -e
 
 # ==============================================================================
-# SentinelFS Integration Test: T17 - Forensic Web Ledger API & SSE Streaming
+# Warden Integration Test: T17 - Forensic Web Ledger API & SSE Streaming
 # ==============================================================================
 
 TEST_DIR=$(mktemp -d)
 export HOME=$(mktemp -d)
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PID_FILE="$HOME/.sentinelfs/sentinelfs.pid"
+PID_FILE="$HOME/.warden/warden.pid"
 
 WATCH_PID=""
 WEB_PID=""
@@ -29,11 +29,11 @@ PORT=$(python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.ge
 # 2. Setup protected directory and baseline
 mkdir -p "$TEST_DIR/watched"
 echo "initial_seed_content" > "$TEST_DIR/watched/seed.txt"
-./sentinelfs add "$TEST_DIR/watched" > /dev/null 2>&1
-./sentinelfs baseline > /dev/null 2>&1
+./warden add "$TEST_DIR/watched" > /dev/null 2>&1
+./warden baseline > /dev/null 2>&1
 
 # 3. Start watch in background
-./sentinelfs watch > /dev/null 2>&1 &
+./warden watch > /dev/null 2>&1 &
 WATCH_PID=$!
 sleep 1.2
 
@@ -43,7 +43,7 @@ if [ ! -f "$PID_FILE" ]; then
 fi
 
 # 4. Start web server in background
-./sentinelfs web --port "$PORT" --web-dir "$ROOT_DIR/web" > /dev/null 2>&1 &
+./warden web --port "$PORT" --web-dir "$ROOT_DIR/web" > /dev/null 2>&1 &
 WEB_PID=$!
 sleep 1.2
 
@@ -110,7 +110,7 @@ assert d['baseline']['drift_count'] >= 1, 'drift_count not detected'
 " || { echo "[FAIL] T17: Drift count not reflected in /api/status"; exit 1; }
 
 # Tamper baseline directly
-echo "tamper_database_content" >> "$HOME/.sentinelfs/baseline.db"
+echo "tamper_database_content" >> "$HOME/.warden/baseline.db"
 curl -s "http://127.0.0.1:$PORT/api/status" > "$TEST_DIR/status_tampered.json"
 python3 -c "
 import json

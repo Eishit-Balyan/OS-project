@@ -1,4 +1,4 @@
-# SentinelFS Forensic Ledger Typography Assets
+# Warden Forensic Ledger Typography Assets
 
 This directory can hold offline `.woff2` font files:
 - `InstrumentSerif-Regular.woff2` (Open Font License)

@@ -1,11 +1,11 @@
 /**
  * ============================================================================
- * SentinelFS - Audit Reporting and History Implementation
+ * Warden - Audit Reporting and History Implementation
  * Module Purpose: Real audit log parsing, multi-criteria filtering (--type,
  *                 --severity, --since, --path, --limit, --tail), ASCII/ANSI
  *                 summary tables with block charts, CSV and self-contained
  *                 dark-mode HTML export.
- * Owner: Arjun & Ayaansh
+ * Owner: Krishna + Aviral
  * ============================================================================
  */
 
@@ -180,7 +180,7 @@ void report_print_comprehensive_summary(const std::vector<ClassifiedEvent>& even
         }
     }
 
-    std::cout << "\n\033[1;36m==================== SentinelFS Security Audit Report ====================\033[0m\n\n";
+    std::cout << "\n\033[1;36m==================== Warden Security Audit Report ====================\033[0m\n\n";
 
     // 1. Severity Distribution
     std::cout << "\033[1;37m[1] Severity Distribution:\033[0m\n";
@@ -289,7 +289,7 @@ bool report_export_html(const std::string& html_path, const std::vector<Classifi
 
     out << "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n"
         << "<meta charset=\"UTF-8\">\n"
-        << "<title>SentinelFS Audit Report</title>\n"
+        << "<title>Warden Audit Report</title>\n"
         << "<style>\n"
         << "  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; "
         << "         background-color: #11111b; color: #cdd6f4; margin: 0; padding: 25px; }\n"
@@ -310,7 +310,7 @@ bool report_export_html(const std::string& html_path, const std::vector<Classifi
         << "  .badge.WARNING { background: #594602; color: #f9e2af; }\n"
         << "  .badge.CRITICAL { background: #610d1f; color: #f38ba8; }\n"
         << "</style>\n</head>\n<body>\n"
-        << "  <h1>🛡️ SentinelFS - Integrity Audit Report</h1>\n"
+        << "  <h1>🛡️ Warden - Integrity Audit Report</h1>\n"
         << "  <p style=\"color: #a6adc8;\">Report generated at: " << format_time(time(nullptr))
         << " | Total recorded events: " << events.size() << "</p>\n"
         << "  <div class=\"cards\">\n"

@@ -1,10 +1,10 @@
 /**
  * ============================================================================
- * SentinelFS - Baseline Management Implementation
+ * Warden - Baseline Management Implementation
  * Module Purpose: Real directory scanning, OpenSSL EVP streaming hashing,
  *                 atomic database file persistence with sidecar tamper detection,
  *                 and parallel multithreaded integrity verification.
- * Owner: Gaurav
+ * Owner: Krishna
  * ============================================================================
  */
 
@@ -266,7 +266,7 @@ bool baseline_save(const std::string& path) {
 
     // Line 1: Header, Line 2: Created epoch
     time_t now = time(nullptr);
-    std::fprintf(fp, "#SENTINELFS-BASELINE v1\n#CREATED %ld\n", static_cast<long>(now));
+    std::fprintf(fp, "#WARDEN-BASELINE v1\n#CREATED %ld\n", static_cast<long>(now));
 
     pthread_mutex_lock(&g_baseline_mutex);
     for (const auto& kv : g_baseline_records) {

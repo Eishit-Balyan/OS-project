@@ -1,9 +1,9 @@
-#ifndef SENTINELFS_WEB_SERVER_H
-#define SENTINELFS_WEB_SERVER_H
+#ifndef WARDEN_WEB_SERVER_H
+#define WARDEN_WEB_SERVER_H
 
 /**
  * ============================================================================
- * SentinelFS - Decoupled HTTP API & Forensic Web Ledger Server
+ * Warden - Decoupled HTTP API & Forensic Web Ledger Server
  * Module Purpose: Standalone C++17 POSIX socket HTTP server serving JSON APIs,
  *                 Server-Sent Events (SSE) tailing events.log, CSV exports,
  *                 and offline static forensic ledger frontend files.
@@ -28,4 +28,4 @@ int web_server_run(const WebServerConfig& config);
 // Helper to escape strings for valid JSON encoding (escapes quotes, backslashes, control characters)
 std::string json_escape(const std::string& input);
 
-#endif // SENTINELFS_WEB_SERVER_H
+#endif // WARDEN_WEB_SERVER_H

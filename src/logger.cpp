@@ -1,9 +1,9 @@
 /**
  * ============================================================================
- * SentinelFS - Logging and Alerting Implementation
+ * Warden - Logging and Alerting Implementation
  * Module Purpose: Real TSV event persistence to events.log, live terminal
  *                 alerting, and syslog dispatch for CRITICAL events.
- * Owner: Ayaansh
+ * Owner: Aviral
  * ============================================================================
  */
 
@@ -46,7 +46,7 @@ void log_event(const ClassifiedEvent& event) {
 
     // 3. Syslog dispatch on CRITICAL security events
     if (event.severity == CRITICAL) {
-        openlog("sentinelfs", LOG_PID | LOG_CONS, LOG_DAEMON);
+        openlog("warden", LOG_PID | LOG_CONS, LOG_DAEMON);
         syslog(LOG_ALERT, "[CRITICAL] %s: %s (%s)",
                event_type_to_string(event.ev.type).c_str(),
                event.ev.path.c_str(),

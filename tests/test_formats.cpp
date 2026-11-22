@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SentinelFS - Data Format and Serialization Test Suite
+ * Warden - Data Format and Serialization Test Suite
  * Module Purpose: Unit tests validating round-trip serialization, special
  *                 character escaping, malformed input rejection, and enum
  *                 conversions in common.cpp.
@@ -183,7 +183,7 @@ static void test_enum_roundtrips() {
 }
 
 int main() {
-    std::cout << "Running SentinelFS Data Format & Serialization Tests..." << std::endl;
+    std::cout << "Running Warden Data Format & Serialization Tests..." << std::endl;
 
     test_baseline_record_escaping();
     test_classified_event_roundtrip();

@@ -1,14 +1,14 @@
-#ifndef SENTINELFS_REPORT_H
-#define SENTINELFS_REPORT_H
+#ifndef WARDEN_REPORT_H
+#define WARDEN_REPORT_H
 
 /**
  * ============================================================================
- * SentinelFS - Audit Reporting and History Module
+ * Warden - Audit Reporting and History Module
  * Module Purpose: Real audit log parsing, multi-criteria filtering (--type,
  *                 --severity, --since, --path, --limit, --tail), ASCII/ANSI
  *                 summary tables with block charts, CSV and self-contained
  *                 dark-mode HTML export.
- * Owner: Arjun & Ayaansh
+ * Owner: Krishna + Aviral
  * ============================================================================
  */
 
@@ -50,4 +50,4 @@ bool report_export_csv(const std::string& csv_path, const std::vector<Classified
 // Exports events to a self-contained single-file dark-themed HTML report with inline CSS
 bool report_export_html(const std::string& html_path, const std::vector<ClassifiedEvent>& events);
 
-#endif // SENTINELFS_REPORT_H
+#endif // WARDEN_REPORT_H

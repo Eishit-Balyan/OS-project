@@ -1,9 +1,9 @@
 /**
  * ============================================================================
- * SentinelFS - Behavioral Anomaly Analyzer Implementation
+ * Warden - Behavioral Anomaly Analyzer Implementation
  * Module Purpose: Real sliding-window timestamp tracking for burst detection.
  *                 Triggers high-priority CRITICAL alerts on rapid mass tamper.
- * Owner: Arjun & Ayaansh
+ * Owner: Eishit
  * ============================================================================
  */
 

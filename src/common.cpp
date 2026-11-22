@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SentinelFS - Shared Helper Implementations
+ * Warden - Shared Helper Implementations
  * Module Purpose: Real implementations for enum-string serialization, TSV field
  *                 escaping/unescaping, record line parsing/formatting, and
  *                 default configuration initialization.

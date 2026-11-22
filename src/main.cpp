@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * SentinelFS - Main Command Dispatcher & Service Orchestrator
+ * Warden - Main Command Dispatcher & Service Orchestrator
  * Module Purpose: CLI argument parsing, POSIX signal handling (SIGINT/SIGTERM,
  *                 SIGHUP, SIGUSR1), PID file locking, real-time watch loop,
  *                 live TUI dashboard thread, and system diagnostics.
@@ -69,7 +69,7 @@ static void setup_signals() {
 }
 
 static std::string get_pid_file_path() {
-    return config_get_default_dir() + "/sentinelfs.pid";
+    return config_get_default_dir() + "/warden.pid";
 }
 
 static bool check_and_create_pidfile(pid_t& existing_pid) {
@@ -328,7 +328,7 @@ int main(int argc, char* argv[]) {
     if (cmd == "watch") {
         pid_t existing_pid = 0;
         if (!check_and_create_pidfile(existing_pid)) {
-            std::cerr << ui_error_mark() << " Error: SentinelFS is already running (PID: "
+            std::cerr << ui_error_mark() << " Error: Warden is already running (PID: "
                       << existing_pid << "). Refusing to start second instance.\n";
             return 1;
         }
@@ -382,7 +382,7 @@ int main(int argc, char* argv[]) {
             pthread_create(&dash_tid, nullptr, dashboard_thread_routine, nullptr);
         } else {
             ui_set_dashboard_active(false);
-            std::cout << "[INFO] Starting SentinelFS in background stream mode (non-TTY)...\n";
+            std::cout << "[INFO] Starting Warden in background stream mode (non-TTY)...\n";
         }
 
         pthread_t stats_tid = 0;
@@ -424,7 +424,7 @@ int main(int argc, char* argv[]) {
         remove_pidfile();
 
         ui_stats_dump_summary();
-        std::cout << ui_success_mark() << " SentinelFS terminated cleanly.\n";
+        std::cout << ui_success_mark() << " Warden terminated cleanly.\n";
         return 0;
     }
 
@@ -526,7 +526,7 @@ int main(int argc, char* argv[]) {
                             ui_human_time_ago(lst.st_mtime) + ")");
         }
 
-        ui_draw_box("SentinelFS Service Diagnostics", lines);
+        ui_draw_box("Warden Service Diagnostics", lines);
         config_list_protected_dirs(config);
         return 0;
     }

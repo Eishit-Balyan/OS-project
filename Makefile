@@ -1,5 +1,5 @@
 # ==============================================================================
-# SentinelFS - Makefile
+# Warden - Makefile
 # Compiler flags: C++17, strict warnings, POSIX threads, OpenSSL crypto
 # Supported targets: all (default), clean, debug, tsan, test-formats, test-queue, test
 # ==============================================================================
@@ -10,7 +10,7 @@ CPPFLAGS ?= -Iinclude
 LDFLAGS  ?= -pthread
 LDLIBS   ?= -lssl -lcrypto
 
-TARGET   := sentinelfs
+TARGET   := warden
 BUILD_DIR := build
 SRC_DIR   := src
 

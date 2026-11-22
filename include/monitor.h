@@ -1,13 +1,13 @@
-#ifndef SENTINELFS_MONITOR_H
-#define SENTINELFS_MONITOR_H
+#ifndef WARDEN_MONITOR_H
+#define WARDEN_MONITOR_H
 
 /**
  * ============================================================================
- * SentinelFS - Real-Time Filesystem Monitor Module
+ * Warden - Real-Time Filesystem Monitor Module
  * Module Purpose: Real Linux inotify file monitoring with recursive subdirectory
  *                 watching, self-pipe shutdown signaling, cookie-based move pairing,
  *                 and queue overflow recovery.
- * Owner: Vaibhav
+ * Owner: Eishit
  * ============================================================================
  */
 
@@ -27,4 +27,4 @@ void monitor_stop();
 // Returns the total number of active directory watches
 size_t monitor_get_watch_count();
 
-#endif // SENTINELFS_MONITOR_H
+#endif // WARDEN_MONITOR_H

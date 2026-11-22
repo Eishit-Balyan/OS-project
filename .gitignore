@@ -1,12 +1,12 @@
 # Binaries and build output
-sentinelfs
+warden
 build/
 *.o
 
 # Audit output logs and artifacts
 audit.csv
 audit_report.html
-.sentinelfs/
+.warden/
 events.log
 baseline.db*
 

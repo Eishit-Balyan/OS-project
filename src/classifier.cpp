@@ -1,11 +1,11 @@
 /**
  * ============================================================================
- * SentinelFS - Event Classifier Implementation
+ * Warden - Event Classifier Implementation
  * Module Purpose: Real security classification comparing incoming events with
  *                 baseline records, detecting false alarms, identifying permission
  *                 and ownership transitions, setuid/setgid escalations, and
  *                 critical path alerts.
- * Owner: Ayaansh
+ * Owner: Ashutosh
  * ============================================================================
  */
 

@@ -1,9 +1,9 @@
 /**
  * ============================================================================
- * SentinelFS - Configuration Management Implementation
+ * Warden - Configuration Management Implementation
  * Module Purpose: Configuration file parser/serializer, directory validation,
  *                 duplicate/nesting rejection, and glob pattern filtering.
- * Owner: Arjun
+ * Owner: Aviral
  * ============================================================================
  */
 
@@ -43,7 +43,7 @@ std::string config_get_default_dir() {
     if (home.empty()) {
         home = ".";
     }
-    return home + "/.sentinelfs";
+    return home + "/.warden";
 }
 
 std::string config_get_default_path() {
@@ -132,7 +132,7 @@ bool config_save(const std::string& config_file, const Config& config) {
     }
 
     outfile << "# =============================================================================\n"
-            << "# SentinelFS Configuration File\n"
+            << "# Warden Configuration File\n"
             << "# =============================================================================\n\n"
             << "worker_count=" << config.worker_count << "\n"
             << "queue_capacity=" << config.queue_capacity << "\n"
@@ -234,7 +234,7 @@ bool config_remove_protected_dir(Config& config, const std::string& dir_path) {
 }
 
 void config_list_protected_dirs(const Config& config) {
-    std::cout << "\n=== SentinelFS Monitored Directories ===\n";
+    std::cout << "\n=== Warden Monitored Directories ===\n";
     if (config.protected_dirs.empty()) {
         std::cout << "  (No protected directories configured. Use 'add <dir>' to add one.)\n";
     } else {

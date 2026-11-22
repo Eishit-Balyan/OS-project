@@ -1,13 +1,13 @@
 /**
  * ============================================================================
- * SentinelFS Documentation Builder
- * Target: docs/SentinelFS_Help.docx
+ * Warden Documentation Builder
+ * Target: docs/Warden_Help.docx
  * Format: A4, 2.5cm margins, Calibri 11pt, 1.15 line spacing, Consolas 10pt code,
  *         styled tables with repeating headers, TOC, real PAGE/NUMPAGES footer.
  * ============================================================================
  */
 
-const docx = require('C:/Users/Ayaansh/.gemini/antigravity/brain/c26c76a5-c211-45f4-a0a9-fbb6fe66e4b1/scratch/node_modules/docx');
+const docx = require('C:/Users/developer/.gemini/antigravity/brain/c26c76a5-c211-45f4-a0a9-fbb6fe66e4b1/scratch/node_modules/docx');
 const fs = require('fs');
 const path = require('path');
 
