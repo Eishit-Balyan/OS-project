@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SentinelFS - Forensic Ledger</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Fixed 64px Oxide Rail -->
+    <aside class="oxide-rail">
+      <div class="rail-top">
+        <div class="rail-brand">SENTINELFS</div>
+        <nav class="rail-nav">
+          <a href="#live" class="rail-nav-link active" data-nav="live">LIVE</a>
+          <a href="#ledger" class="rail-nav-link" data-nav="ledger">LEDGER</a>
+          <a href="#report" class="rail-nav-link" data-nav="report">REPORT</a>
+          <a href="#system" class="rail-nav-link" data-nav="system">SYSTEM</a>
+        </nav>
+      </div>
+      <div class="rail-bottom">
+        <div class="rail-status-pip" id="rail-status-pip" title="Daemon Link Status"></div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      <!-- Lost Contact Banner -->
+      <div class="connection-banner" id="connection-banner">
+        <span>Lost contact with sentinelfs web — retrying...</span>
+      </div>
+
+      <main class="content-grid">
+        <!-- ================= PAGE 1: #live ================= -->
+        <div id="view-live" class="page-view active">
+          <!-- 4-Cell Spec Sheet Status Strip -->
+          <div class="col-full">
+            <div class="spec-strip">
+              <div class="spec-cell">
+                <span class="spec-key">DAEMON STATE</span>
+                <span class="spec-val" id="spec-daemon-state">--</span>
+                <span class="spec-sub" id="spec-daemon-sub">PID: --</span>
+              </div>
+              <div class="spec-cell">
+                <span class="spec-key">SYSTEM UPTIME</span>
+                <span class="spec-val" id="spec-uptime">--</span>
+                <span class="spec-sub" id="spec-uptime-sub">NO LIVE STATS</span>
+              </div>
+              <div class="spec-cell">
+                <span class="spec-key">QUEUE DEPTH</span>
+                <span class="spec-val" id="spec-queue-val">0 / --</span>
+                <div class="ruled-bar-wrap">
+                  <div class="ruled-bar-fill" id="spec-queue-bar"></div>
+                </div>
+              </div>
+              <div class="spec-cell">
+                <span class="spec-key">INGEST TELEMETRY</span>
+                <span class="spec-val" id="spec-rate-val">0.0 ev/s</span>
+                <span class="spec-sub" id="spec-events-total">Total: 0 events</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Left Column (Cols 1-8): Live Ruled Ledger -->
+          <div class="col-8">
+            <div class="section-header">
+              <h1 class="section-title">Live Security Ledger</h1>
+              <span class="section-label">Real-time custody stream</span>
+            </div>
+
+            <!-- Threat & Warning Alert Box -->
+            <div class="ledger-alert-box" id="ledger-alert-box" style="display: none;">
+              <div class="alert-indicator-tick"></div>
+              <div class="alert-body">
+                <div class="alert-header-row">
+                  <span class="alert-badge" id="alert-badge">SECURITY ALERT</span>
+                  <span class="alert-timestamp" id="alert-timestamp">--:--:--</span>
+                </div>
+                <div class="alert-message" id="alert-message">
+                  No alerts detected.
+                </div>
+              </div>
+              <button class="alert-ack-btn" id="alert-ack-btn" title="Acknowledge and dismiss alert">ACKNOWLEDGE</button>
+            </div>
+
+            <div class="ledger-panel">
+              <div class="ledger-table-head">
+                <span>TIME</span>
+                <span>EVENT TYPE</span>
+                <span>FILE PATH</span>
+                <span>AUDIT DETAIL</span>
+              </div>
+              <div class="ledger-rows-stream" id="live-ledger-rows">
+                <div class="empty-ledger">No entries. The ledger is quiet.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column (Cols 9-12): Stamp, Pulse, Breakdown -->
+          <div class="col-4">
+            <!-- Bespoke Component 2: Integrity Seal -->
+            <div class="seal-container">
+              <div class="seal-stamp" id="seal-stamp">
+                <div class="seal-word" id="seal-word">SEALED</div>
+                <div class="seal-meta">
+                  <div>BASELINE: <span class="seal-hash" id="seal-hash">--</span></div>
+                  <div>RECORDS: <span id="seal-files">--</span> monitored files</div>
+                  <div id="seal-date">CREATED: --</div>
+                  <div id="seal-drift-info">DRIFT: 0 files changed</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bespoke Component 3: Pulse Strip -->
+            <div class="pulse-panel">
+              <div class="pulse-header">
+                <span>60s INGEST PULSE</span>
+                <span id="pulse-rate-label">BURST THRESHOLD</span>
+              </div>
+              <svg class="pulse-svg" id="pulse-svg" viewBox="0 0 300 64" preserveAspectRatio="none">
+                <!-- Burst threshold horizontal dashed line -->
+                <line id="pulse-threshold-line" x1="0" y1="32" x2="300" y2="32" stroke="var(--vermilion)" stroke-width="1.5" stroke-dasharray="4 3" />
+                <!-- 60 vertical bars generated via JS -->
+                <g id="pulse-bars-group"></g>
+              </svg>
+            </div>
+
+            <!-- Severity & Type Breakdown -->
+            <div class="breakdown-panel">
+              <div class="pulse-header" style="margin-bottom: 8px;">
+                <span>SEVERITY DISTRIBUTION</span>
+              </div>
+              <div class="breakdown-row">
+                <span style="font-size: 11px;">CRITICAL</span>
+                <div class="breakdown-bar-bg">
+                  <div class="breakdown-bar-fill fill-crit" id="bar-crit" style="width: 0%;"></div>
+                </div>
+                <span id="cnt-crit" style="font-weight: 600;">0</span>
+              </div>
+              <div class="breakdown-row">
+                <span style="font-size: 11px;">WARNING</span>
+                <div class="breakdown-bar-bg">
+                  <div class="breakdown-bar-fill fill-warn" id="bar-warn" style="width: 0%;"></div>
+                </div>
+                <span id="cnt-warn" style="font-weight: 600;">0</span>
+              </div>
+              <div class="breakdown-row">
+                <span style="font-size: 11px;">INFO</span>
+                <div class="breakdown-bar-bg">
+                  <div class="breakdown-bar-fill fill-info" id="bar-info" style="width: 0%;"></div>
+                </div>
+                <span id="cnt-info" style="font-weight: 600;">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= PAGE 2: #ledger ================= -->
+        <div id="view-ledger" class="page-view">
+          <div class="col-full">
+            <div class="section-header">
+              <h1 class="section-title">Historical Audit Ledger</h1>
+              <span class="section-label">Permanent file event register</span>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-bar">
+              <div class="filter-group">
+                <label>Type</label>
+                <select id="filt-type" class="filter-select">
+                  <option value="">All Types</option>
+                  <option value="CREATED">CREATED</option>
+                  <option value="MODIFIED">MODIFIED</option>
+                  <option value="DELETED">DELETED</option>
+                  <option value="MOVED">MOVED</option>
+                  <option value="PERM_CHANGED">PERM_CHANGED</option>
+                  <option value="OWNER_CHANGED">OWNER_CHANGED</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label>Severity</label>
+                <select id="filt-sev" class="filter-select">
+                  <option value="">All Severities</option>
+                  <option value="CRITICAL">CRITICAL</option>
+                  <option value="WARNING">WARNING</option>
+                  <option value="INFO">INFO</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label>Since Window</label>
+                <input type="text" id="filt-since" class="filter-input" placeholder="e.g. 10m, 1h, 1d" style="width: 130px;">
+              </div>
+              <div class="filter-group">
+                <label>Path Substring</label>
+                <input type="text" id="filt-path" class="filter-input" placeholder="Search path..." style="width: 220px;">
+              </div>
+              <div style="display: flex; gap: 8px; margin-top: 16px;">
+                <button id="btn-apply-filter" class="btn">Filter</button>
+                <button id="btn-reset-filter" class="btn btn-secondary">Reset</button>
+                <a id="btn-export-csv" href="/api/export.csv" class="btn btn-secondary" download>Export CSV</a>
+              </div>
+            </div>
+
+            <!-- Ledger Table -->
+            <div class="ledger-panel">
+              <div class="ledger-table-head">
+                <span>TIME</span>
+                <span>EVENT TYPE</span>
+                <span>FILE PATH</span>
+                <span>AUDIT DETAIL</span>
+              </div>
+              <div class="ledger-rows-stream" id="history-ledger-rows" style="max-height: 800px;">
+                <div class="empty-ledger">No entries. The ledger is quiet.</div>
+              </div>
+            </div>
+            <div style="margin-top: 16px; text-align: center;">
+              <button id="btn-load-older" class="btn btn-secondary" style="display: none;">Load Older Entries</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= PAGE 3: #report ================= -->
+        <div id="view-report" class="page-view">
+          <div class="col-full">
+            <div class="section-header">
+              <h1 class="section-title">Integrity Summary Report</h1>
+              <span class="section-label">Aggregate forensic ledger audit</span>
+            </div>
+
+            <!-- Large Numeral Cards -->
+            <div class="report-numeral-grid">
+              <div class="report-numeral-card">
+                <span class="section-label">TOTAL RECORDED EVENTS</span>
+                <div class="report-numeral" id="rep-total">0</div>
+              </div>
+              <div class="report-numeral-card">
+                <span class="section-label">CRITICAL TAMPER ALERTS</span>
+                <div class="report-numeral" id="rep-crit" style="color: var(--vermilion);">0</div>
+              </div>
+              <div class="report-numeral-card">
+                <span class="section-label">DRIFTED PATHS</span>
+                <div class="report-numeral" id="rep-drift" style="color: var(--ochre);">0</div>
+              </div>
+              <div class="report-numeral-card">
+                <span class="section-label">PROTECTED ROOTS</span>
+                <div class="report-numeral" id="rep-roots">0</div>
+              </div>
+            </div>
+
+            <!-- Report Export Links -->
+            <div style="margin-bottom: 24px; display: flex; gap: 12px;">
+              <a href="/api/report.html" target="_blank" class="btn">View Formatted HTML Report</a>
+              <a href="/api/export.csv" class="btn btn-secondary" download>Download Raw CSV Log</a>
+            </div>
+
+            <!-- Top 5 Modified Files -->
+            <div class="section-header" style="margin-top: 24px;">
+              <h2 class="section-title" style="font-size: 24px;">Top Active Paths</h2>
+              <span class="section-label">Frequency of modifications</span>
+            </div>
+            <table class="report-table">
+              <thead>
+                <tr>
+                  <th>FILE PATH</th>
+                  <th style="width: 140px; text-align: right;">EVENT COUNT</th>
+                </tr>
+              </thead>
+              <tbody id="rep-top-paths-tbody">
+                <tr><td colspan="2" class="empty-ledger">No active file paths recorded.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ================= PAGE 4: #system ================= -->
+        <div id="view-system" class="page-view">
+          <div class="col-full">
+            <div class="section-header">
+              <h1 class="section-title">System & Host Diagnostics</h1>
+              <span class="section-label">Local environment facts</span>
+            </div>
+
+            <div class="system-card">
+              <h3 style="margin-bottom: 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--hairline); padding-bottom: 8px;">
+                Daemon Health (/proc Facts)
+              </h3>
+              <div class="system-prop-list">
+                <span class="system-prop-key">Daemon Process State</span>
+                <span class="system-prop-val" id="sys-daemon-state">--</span>
+
+                <span class="system-prop-key">PID</span>
+                <span class="system-prop-val" id="sys-daemon-pid">--</span>
+
+                <span class="system-prop-key">Process Uptime</span>
+                <span class="system-prop-val" id="sys-daemon-uptime">--</span>
+
+                <span class="system-prop-key">Memory Resident (RSS)</span>
+                <span class="system-prop-val" id="sys-daemon-rss">--</span>
+
+                <span class="system-prop-key">Active Threads</span>
+                <span class="system-prop-val" id="sys-daemon-threads">--</span>
+              </div>
+            </div>
+
+            <div class="system-card">
+              <h3 style="margin-bottom: 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--hairline); padding-bottom: 8px;">
+                Protected Filesystem Roots
+              </h3>
+              <ul id="sys-roots-list" style="list-style: none; padding: 0; font-size: 12px; line-height: 1.8;">
+                <li style="color: var(--ink-muted);">Loading roots...</li>
+              </ul>
+            </div>
+
+            <div class="system-card">
+              <h3 style="margin-bottom: 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--hairline); padding-bottom: 8px;">
+                Baseline & Web Server Configuration
+              </h3>
+              <div class="system-prop-list">
+                <span class="system-prop-key">Integrity Seal Status</span>
+                <span class="system-prop-val" id="sys-seal-status">--</span>
+
+                <span class="system-prop-key">Baseline SHA-256</span>
+                <span class="system-prop-val" id="sys-baseline-hash" style="font-family: monospace;">--</span>
+
+                <span class="system-prop-key">Monitored Records</span>
+                <span class="system-prop-val" id="sys-baseline-count">--</span>
+
+                <span class="system-prop-key">Burst Rate Limit</span>
+                <span class="system-prop-val" id="sys-burst-cfg">--</span>
+
+                <span class="system-prop-key">Web Server Port</span>
+                <span class="system-prop-val" id="sys-web-port">--</span>
+
+                <span class="system-prop-key">Web Assets Directory</span>
+                <span class="system-prop-val" id="sys-web-dir">--</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

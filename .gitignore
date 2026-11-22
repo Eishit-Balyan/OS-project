@@ -1,0 +1,16 @@
+# Binaries and build output
+sentinelfs
+build/
+*.o
+
+# Audit output logs and artifacts
+audit.csv
+audit_report.html
+.sentinelfs/
+events.log
+baseline.db*
+
+# OS / Editor files
+.DS_Store
+*.swp
+*~
