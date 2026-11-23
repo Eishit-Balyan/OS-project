@@ -3,37 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Warden - Forensic Ledger</title>
+  <title>Warden - Security Ledger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Silkscreen:wght@400;700&family=Share+Tech+Mono&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
   <div class="app-container">
-    <!-- Fixed 64px Oxide Rail -->
-    <aside class="oxide-rail">
-      <div class="rail-top">
-        <div class="rail-brand">WARDEN</div>
-        <nav class="rail-nav">
-          <a href="#live" class="rail-nav-link active" data-nav="live">LIVE</a>
-          <a href="#ledger" class="rail-nav-link" data-nav="ledger">LEDGER</a>
-          <a href="#report" class="rail-nav-link" data-nav="report">REPORT</a>
-          <a href="#system" class="rail-nav-link" data-nav="system">SYSTEM</a>
-        </nav>
+    <!-- Top Horizontal Navbar -->
+    <header class="top-navbar">
+      <div class="navbar-content">
+        <div class="navbar-brand-group">
+          <div class="rail-brand">WARDEN</div>
+          <nav class="rail-nav">
+            <a href="#live" class="rail-nav-link active" data-nav="live">LIVE</a>
+            <a href="#ledger" class="rail-nav-link" data-nav="ledger">LEDGER</a>
+            <a href="#report" class="rail-nav-link" data-nav="report">REPORT</a>
+            <a href="#system" class="rail-nav-link" data-nav="system">SYSTEM</a>
+          </nav>
+        </div>
+        <div class="navbar-status-group">
+          <span class="status-indicator-label">SYSTEM STATUS</span>
+          <div class="rail-status-pip" id="rail-status-pip" title="Daemon Link Status"></div>
+        </div>
       </div>
-      <div class="rail-bottom">
-        <div class="rail-status-pip" id="rail-status-pip" title="Daemon Link Status"></div>
-      </div>
-    </aside>
+    </header>
 
     <!-- Main Workspace -->
     <div class="main-wrapper">
-      <!-- Lost Contact Banner -->
+      <!-- Connection Status Banner -->
       <div class="connection-banner" id="connection-banner">
-        <span>Lost contact with warden web — retrying...</span>
+        <span>Lost contact with warden web &mdash; retrying...</span>
       </div>
 
       <main class="content-grid">
         <!-- ================= PAGE 1: #live ================= -->
         <div id="view-live" class="page-view active">
+          <!-- Main Headline & Intro Header -->
+          <div class="col-full">
+            <div class="section-header main-page-header">
+              <h1 class="section-title">Live Security Ledger</h1>
+              <span class="section-label">Real-time custody stream</span>
+            </div>
+          </div>
+
           <!-- 4-Cell Spec Sheet Status Strip -->
           <div class="col-full">
             <div class="spec-strip">
@@ -62,13 +76,8 @@
             </div>
           </div>
 
-          <!-- Left Column (Cols 1-8): Live Ruled Ledger -->
+          <!-- Left Column (Cols 1-8): Live Ledger & Active Alerts -->
           <div class="col-8">
-            <div class="section-header">
-              <h1 class="section-title">Live Security Ledger</h1>
-              <span class="section-label">Real-time custody stream</span>
-            </div>
-
             <!-- Threat & Warning Alert Box -->
             <div class="ledger-alert-box" id="ledger-alert-box" style="display: none;">
               <div class="alert-indicator-tick"></div>
@@ -99,7 +108,7 @@
 
           <!-- Right Column (Cols 9-12): Stamp, Pulse, Breakdown -->
           <div class="col-4">
-            <!-- Bespoke Component 2: Integrity Seal -->
+            <!-- Integrity Seal -->
             <div class="seal-container">
               <div class="seal-stamp" id="seal-stamp">
                 <div class="seal-word" id="seal-word">SEALED</div>
@@ -112,10 +121,10 @@
               </div>
             </div>
 
-            <!-- Bespoke Component 3: Pulse Strip -->
+            <!-- Pulse Strip -->
             <div class="pulse-panel">
               <div class="pulse-header">
-                <span>60s INGEST PULSE</span>
+                <span>ACTIVITY (60s)</span>
                 <span id="pulse-rate-label">BURST THRESHOLD</span>
               </div>
               <svg class="pulse-svg" id="pulse-svg" viewBox="0 0 300 64" preserveAspectRatio="none">
@@ -126,7 +135,7 @@
               </svg>
             </div>
 
-            <!-- Severity & Type Breakdown -->
+            <!-- Severity Distribution -->
             <div class="breakdown-panel">
               <div class="pulse-header" style="margin-bottom: 8px;">
                 <span>SEVERITY DISTRIBUTION</span>
@@ -159,9 +168,9 @@
         <!-- ================= PAGE 2: #ledger ================= -->
         <div id="view-ledger" class="page-view">
           <div class="col-full">
-            <div class="section-header">
+            <div class="section-header main-page-header">
               <h1 class="section-title">Historical Audit Ledger</h1>
-              <span class="section-label">Permanent file event register</span>
+              <span class="section-label">Permanent event query</span>
             </div>
 
             <!-- Filter Controls -->
@@ -223,9 +232,9 @@
         <!-- ================= PAGE 3: #report ================= -->
         <div id="view-report" class="page-view">
           <div class="col-full">
-            <div class="section-header">
+            <div class="section-header main-page-header">
               <h1 class="section-title">Integrity Summary Report</h1>
-              <span class="section-label">Aggregate forensic ledger audit</span>
+              <span class="section-label">Diagnostic overview</span>
             </div>
 
             <!-- Large Numeral Cards -->
@@ -256,8 +265,7 @@
 
             <!-- Top 5 Modified Files -->
             <div class="section-header" style="margin-top: 24px;">
-              <h2 class="section-title" style="font-size: 24px;">Top Active Paths</h2>
-              <span class="section-label">Frequency of modifications</span>
+              <h2 class="section-title" style="font-size: 18px;">Top Active Paths</h2>
             </div>
             <table class="report-table">
               <thead>
@@ -276,13 +284,13 @@
         <!-- ================= PAGE 4: #system ================= -->
         <div id="view-system" class="page-view">
           <div class="col-full">
-            <div class="section-header">
-              <h1 class="section-title">System & Host Diagnostics</h1>
-              <span class="section-label">Local environment facts</span>
+            <div class="section-header main-page-header">
+              <h1 class="section-title">System &amp; Host Diagnostics</h1>
+              <span class="section-label">Runtime facts</span>
             </div>
 
             <div class="system-card">
-              <h3 style="margin-bottom: 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--hairline); padding-bottom: 8px;">
+              <h3 style="margin-bottom: 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--hairline); padding-bottom: 8px;">
                 Daemon Health (/proc Facts)
               </h3>
               <div class="system-prop-list">
@@ -304,7 +312,7 @@
             </div>
 
             <div class="system-card">
-              <h3 style="margin-bottom: 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--hairline); padding-bottom: 8px;">
+              <h3 style="margin-bottom: 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--hairline); padding-bottom: 8px;">
                 Protected Filesystem Roots
               </h3>
               <ul id="sys-roots-list" style="list-style: none; padding: 0; font-size: 12px; line-height: 1.8;">
@@ -313,15 +321,15 @@
             </div>
 
             <div class="system-card">
-              <h3 style="margin-bottom: 16px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--hairline); padding-bottom: 8px;">
-                Baseline & Web Server Configuration
+              <h3 style="margin-bottom: 16px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--hairline); padding-bottom: 8px;">
+                Baseline &amp; Web Server Configuration
               </h3>
               <div class="system-prop-list">
                 <span class="system-prop-key">Integrity Seal Status</span>
                 <span class="system-prop-val" id="sys-seal-status">--</span>
 
                 <span class="system-prop-key">Baseline SHA-256</span>
-                <span class="system-prop-val" id="sys-baseline-hash" style="font-family: monospace;">--</span>
+                <span class="system-prop-val" id="sys-baseline-hash" style="font-family: var(--font-mono);">--</span>
 
                 <span class="system-prop-key">Monitored Records</span>
                 <span class="system-prop-val" id="sys-baseline-count">--</span>

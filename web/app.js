@@ -239,13 +239,15 @@
       rect.setAttribute('y', y.toFixed(1));
       rect.setAttribute('width', barWidth.toString());
       rect.setAttribute('height', h.toFixed(1));
+      rect.setAttribute('rx', '1.5');
+      rect.setAttribute('ry', '1.5');
 
       if (val >= burstRateThreshold) {
-        rect.setAttribute('fill', 'var(--vermilion)');
+        rect.setAttribute('fill', 'var(--bar-sakura-red)');
       } else if (val > 0) {
-        rect.setAttribute('fill', 'var(--ink)');
+        rect.setAttribute('fill', 'var(--neon-green)');
       } else {
-        rect.setAttribute('fill', 'var(--hairline)');
+        rect.setAttribute('fill', '#0e2415');
       }
       group.appendChild(rect);
     });
