@@ -80,37 +80,38 @@ std::string ui_pad_left(const std::string& str, size_t target_width) {
 
 void ui_print_banner() {
     if (!ui_colors_enabled()) {
-        std::cout << "========================================================\n"
-                  << "  Warden - Real-Time File Integrity Monitor v1.0.0\n"
-                  << "========================================================\n";
+        std::cout << "========================================================================\n"
+                  << "  WARDEN // HOST DEFENSE & INTEGRITY SYSTEM // ROOT MONITOR v1.0.0\n"
+                  << "========================================================================\n";
         return;
     }
-    std::cout << "\033[38;5;67m"
-              << "  ╭────────────────────────────────────────────────────────────╮\n"
-              << "  │   \033[38;5;81m    ░█░░░█░█▀▀█░█▀▀▄░█▀▀▄░█▀▀▀░█▀▀▄░    \033[38;5;67m   \033[1;38;5;141mv1.0.0\033[38;5;67m        │\n"
-              << "  │   \033[38;5;117m    ░█░█░█░█▄▄█░█▄▄▀░█░░█░█▀▀░░█░░█░    \033[38;5;67m   \033[38;5;244mLinux Host    \033[38;5;67m│\n"
-              << "  │   \033[38;5;123m    ░▀▄▀▄▀░▀░░▀░▀░░▀░▀▀▀░░▀▀▀▀░▀░░▀░    \033[38;5;67m   \033[38;5;250mIntegrity     \033[38;5;67m│\n"
-              << "  ╰────────────────────────────────────────────────────────────╯\033[0m\n";
+    // High-impact red cyberpunk / hack-like ASCII banner with sharp borders and crimson glows
+    std::cout << "\033[38;5;196m"
+              << "  ┌──────────────────────────────────────────────────────────────────────┐\n"
+              << "  │ \033[1;38;5;196m █░░█░█▀▀█░█▀▀▄░█▀▀▄░█▀▀▀░█▀▀▄  \033[38;5;160m[SEC-OPS]  \033[1;38;5;202mDEFENSE PROTOCOL ACTIVE \033[38;5;196m │\n"
+              << "  │ \033[1;38;5;160m █░█░█░█▄▄█░█▄▄▀░█░░█░█▀▀░░█░░█  \033[38;5;88m[SYS-ID]   \033[38;5;250mNODE://ROOT-SENTINEL   \033[38;5;196m │\n"
+              << "  │ \033[1;38;5;124m ▀▄▀▄▀░▀░░▀░▀░░▀░▀▀▀░░▀▀▀▀░▀░░▀  \033[38;5;196m[STATUS]   \033[1;5;38;5;196m● THREAT INTERCEPT ON  \033[25m\033[38;5;196m │\n"
+              << "  └──────────────────────────────────────────────────────────────────────┘\033[0m\n";
 }
 
 void ui_print_version() {
-    std::cout << "Warden v1.0.0 (Linux x86_64 POSIX inotify engine)\n";
+    std::cout << "\033[1;38;5;196m[!] WARDEN CYBER-SENTINEL v1.0.0 \033[38;5;88m// \033[38;5;203mKERNEL INOTIFY REALTIME ENGINE \033[38;5;88m[SEC-LVL:MAX]\033[0m\n";
 }
 
 std::string ui_badge(Severity severity) {
     if (!ui_colors_enabled()) {
         switch (severity) {
-            case INFO:     return "[INFO]";
-            case WARNING:  return "[WARN]";
-            case CRITICAL: return "[CRIT]";
-            default:       return "[INFO]";
+            case INFO:     return "[SYS-LOG]";
+            case WARNING:  return "[THREAT]";
+            case CRITICAL: return "[BREACH]";
+            default:       return "[ALERT]";
         }
     }
     switch (severity) {
-        case INFO:     return "\033[38;5;232;48;5;74m ℹ INFO \033[0m";
-        case WARNING:  return "\033[38;5;232;48;5;215m ⚠ WARN \033[0m";
-        case CRITICAL: return "\033[1;38;5;231;48;5;197m ✖ CRIT \033[0m";
-        default:       return "\033[38;5;232;48;5;74m ℹ INFO \033[0m";
+        case INFO:     return "\033[38;5;232;48;5;88m ☠ SYS-LOG \033[0m";
+        case WARNING:  return "\033[1;38;5;232;48;5;202m ⚡ THREAT  \033[0m";
+        case CRITICAL: return "\033[1;38;5;231;48;5;196m ☣ BREACH  \033[0m";
+        default:       return "\033[38;5;232;48;5;88m ☠ ALERT   \033[0m";
     }
 }
 
@@ -120,27 +121,27 @@ std::string ui_event_badge(EventType type) {
         return "[" + s + "]";
     }
     switch (type) {
-        case CREATED:       return "\033[38;5;120m+ CREATE\033[0m";
-        case MODIFIED:      return "\033[38;5;222m~ MODIFY\033[0m";
-        case DELETED:       return "\033[38;5;203m- DELETE\033[0m";
-        case MOVED:         return "\033[38;5;183m→ MOVED \033[0m";
-        case PERM_CHANGED:  return "\033[38;5;214m⚙ PERMS \033[0m";
-        case OWNER_CHANGED: return "\033[38;5;208m👤 OWNER \033[0m";
+        case CREATED:       return "\033[1;38;5;196m[+INJECT]\033[0m";
+        case MODIFIED:      return "\033[1;38;5;208m[~MUTATE]\033[0m";
+        case DELETED:       return "\033[1;38;5;160m[-PURGE ]\033[0m";
+        case MOVED:         return "\033[1;38;5;203m[→HIJACK]\033[0m";
+        case PERM_CHANGED:  return "\033[1;38;5;197m[⚙CHMOD ]\033[0m";
+        case OWNER_CHANGED: return "\033[1;38;5;202m[👤CHOWN ]\033[0m";
         case UNKNOWN:
-        default:            return "\033[38;5;244m? UNKNOWN\033[0m";
+        default:            return "\033[38;5;88m[?ANOMAL]\033[0m";
     }
 }
 
 std::string ui_success_mark() {
-    return ui_colors_enabled() ? "\033[1;38;5;120m✔\033[0m" : "[OK]";
+    return ui_colors_enabled() ? "\033[1;38;5;196m[✔]\033[0m" : "[OK]";
 }
 
 std::string ui_error_mark() {
-    return ui_colors_enabled() ? "\033[1;38;5;203m✖\033[0m" : "[ERROR]";
+    return ui_colors_enabled() ? "\033[1;5;38;5;196m[✖ FATAL]\033[25m\033[0m" : "[FATAL]";
 }
 
 std::string ui_warn_mark() {
-    return ui_colors_enabled() ? "\033[1;38;5;215m▲\033[0m" : "[WARN]";
+    return ui_colors_enabled() ? "\033[1;38;5;202m[▲ ALERT]\033[0m" : "[WARN]";
 }
 
 std::string ui_truncate_path(const std::string& path, size_t max_len) {
@@ -187,22 +188,22 @@ void ui_draw_box(const std::string& title, const std::vector<std::string>& lines
     }
     if (width < 50) width = 50;
 
-    std::string b_col = ui_colors_enabled() ? "\033[38;5;67m" : "";
-    std::string t_col = ui_colors_enabled() ? "\033[1;38;5;81m" : "";
+    std::string b_col = ui_colors_enabled() ? "\033[38;5;196m" : "";
+    std::string t_col = ui_colors_enabled() ? "\033[1;38;5;196m" : "";
     std::string rst = ui_colors_enabled() ? "\033[0m" : "";
 
-    std::cout << b_col << "╭─ " << t_col << title << b_col << " ";
-    size_t header_len = ui_visible_len(title) + 4;
+    std::cout << b_col << "┌──[ " << t_col << title << b_col << " ]";
+    size_t header_len = ui_visible_len(title) + 6;
     for (size_t i = header_len; i < width - 1; ++i) std::cout << "─";
-    std::cout << "╮" << rst << "\n";
+    std::cout << "┐" << rst << "\n";
 
     for (const auto& l : lines) {
         std::cout << b_col << "│ " << rst << ui_pad_right(l, width - 4) << b_col << " │" << rst << "\n";
     }
 
-    std::cout << b_col << "╰";
-    for (size_t i = 1; i < width - 1; ++i) std::cout << "─";
-    std::cout << "╯" << rst << "\n";
+    std::cout << b_col << "└──";
+    for (size_t i = 3; i < width - 1; ++i) std::cout << "─";
+    std::cout << "┘" << rst << "\n";
 }
 
 void ui_draw_table(const std::vector<std::string>& headers,
@@ -210,17 +211,17 @@ void ui_draw_table(const std::vector<std::string>& headers,
                    const std::vector<size_t>& widths) {
     if (headers.size() != widths.size()) return;
 
-    std::string b_col = ui_colors_enabled() ? "\033[38;5;239m" : "";
-    std::string h_col = ui_colors_enabled() ? "\033[1;38;5;81m" : "";
+    std::string b_col = ui_colors_enabled() ? "\033[38;5;124m" : "";
+    std::string h_col = ui_colors_enabled() ? "\033[1;38;5;196m" : "";
     std::string rst = ui_colors_enabled() ? "\033[0m" : "";
 
     // Top border
-    std::cout << b_col << "╭";
+    std::cout << b_col << "┌";
     for (size_t i = 0; i < widths.size(); ++i) {
         for (size_t j = 0; j < widths[i] + 2; ++j) std::cout << "─";
         if (i + 1 < widths.size()) std::cout << "┬";
     }
-    std::cout << "╮" << rst << "\n";
+    std::cout << "┐" << rst << "\n";
 
     // Header labels
     std::cout << b_col << "│" << rst;
@@ -242,18 +243,18 @@ void ui_draw_table(const std::vector<std::string>& headers,
         std::cout << b_col << "│" << rst;
         for (size_t i = 0; i < widths.size(); ++i) {
             std::string cell = (i < row.size()) ? row[i] : "";
-            std::cout << " " << ui_pad_right(cell, widths[i]) << b_col << " │" << rst;
+            std::cout << " \033[38;5;252m" << ui_pad_right(cell, widths[i]) << rst << b_col << " │" << rst;
         }
         std::cout << "\n";
     }
 
     // Bottom border
-    std::cout << b_col << "╰";
+    std::cout << b_col << "└";
     for (size_t i = 0; i < widths.size(); ++i) {
         for (size_t j = 0; j < widths[i] + 2; ++j) std::cout << "─";
         if (i + 1 < widths.size()) std::cout << "┴";
     }
-    std::cout << "╯" << rst << "\n";
+    std::cout << "┘" << rst << "\n";
 }
 
 void ui_draw_progress_bar(size_t done, size_t total, const std::string& prefix) {
@@ -262,17 +263,17 @@ void ui_draw_progress_bar(size_t done, size_t total, const std::string& prefix) 
     if (frac > 1.0f) frac = 1.0f;
     size_t filled = static_cast<size_t>(frac * bar_width);
 
-    std::string bar_col = "\033[38;5;81m";
-    std::string track_col = "\033[38;5;238m";
+    std::string bar_col = "\033[1;38;5;196m";
+    std::string track_col = "\033[38;5;52m";
     std::string rst = "\033[0m";
 
     std::cout << "\r" << prefix << " [";
     for (size_t i = 0; i < bar_width; ++i) {
-        if (i < filled) std::cout << bar_col << "▰";
-        else std::cout << track_col << "▱";
+        if (i < filled) std::cout << bar_col << "█";
+        else std::cout << track_col << "░";
     }
     int percent = static_cast<int>(frac * 100);
-    std::cout << rst << "] \033[1;37m" << std::setw(3) << percent << "%\033[0m ("
+    std::cout << rst << "] \033[1;38;5;196m" << std::setw(3) << percent << "%\033[0m ("
               << done << "/" << total << ")" << std::flush;
     if (done >= total) {
         std::cout << "\n";
@@ -284,8 +285,9 @@ std::string ui_horizontal_bar(size_t value, size_t max_val, size_t bar_width) {
     float frac = static_cast<float>(value) / max_val;
     if (frac > 1.0f) frac = 1.0f;
     size_t filled = static_cast<size_t>(frac * bar_width);
-    std::string s;
+    std::string s = "\033[38;5;196m";
     for (size_t i = 0; i < filled; ++i) s += "█";
+    s += "\033[0m";
     return s;
 }
 
@@ -337,18 +339,19 @@ void ui_stats_record_event(const ClassifiedEvent& ce, size_t current_q_depth) {
 
 void ui_print_alert_line(const ClassifiedEvent& ce) {
     std::string time_str = format_time(ce.ev.timestamp);
-    std::string t_col = "\033[38;5;244m";
+    std::string t_col = "\033[38;5;88m";
+    std::string p_col = "\033[1;38;5;255m";
     std::string rst = "\033[0m";
 
     std::cout << t_col << "[" << time_str << "]" << rst << " "
               << ui_badge(ce.severity) << " "
               << ui_event_badge(ce.ev.type) << " "
-              << "\033[1;37m" << ce.ev.path << rst;
+              << p_col << ce.ev.path << rst;
     if (!ce.ev.old_path.empty()) {
-        std::cout << " \033[38;5;183m(from " << ce.ev.old_path << ")\033[0m";
+        std::cout << " \033[38;5;160m(hijacked-from: " << ce.ev.old_path << ")\033[0m";
     }
     if (!ce.detail.empty()) {
-        std::cout << " \033[38;5;250m- " << ce.detail << rst;
+        std::cout << " \033[38;5;203m» " << ce.detail << rst;
     }
     std::cout << "\n";
 }
@@ -362,10 +365,10 @@ void ui_render_dashboard() {
     double eps = static_cast<double>(g_stats.total_events) / uptime;
 
     const size_t BOX_WIDTH = 84;
-    const std::string b_col = "\033[38;5;67m";
-    const std::string t_col = "\033[1;38;5;81m";
-    const std::string s_col = "\033[38;5;244m";
-    const std::string v_col = "\033[1;38;5;255m";
+    const std::string b_col = "\033[1;38;5;196m"; // Blood/Crimson Red Border
+    const std::string t_col = "\033[1;38;5;196m"; // Neon Hacker Red Title
+    const std::string s_col = "\033[38;5;88m";   // Darker Red Secondary
+    const std::string v_col = "\033[1;38;5;255m";  // Crisp White / Red highlight Value
     const std::string rst = "\033[0m";
 
     std::ostringstream buf;
@@ -374,20 +377,20 @@ void ui_render_dashboard() {
     buf << "\033[H";
 
     // Header bar
-    buf << b_col << "╭─ " << t_col << "Warden Host Integrity Daemon "
-        << "\033[38;5;120m● ACTIVE "
-        << b_col;
-    size_t top_len = ui_visible_len("Warden Host Integrity Daemon ● ACTIVE ") + 4;
+    buf << b_col << "┌──[ " << t_col << "WARDEN // ROOT SENTINEL CYBER-GRID "
+        << "\033[1;5;38;5;196m● LIVE INTERCEPT " << "\033[25m"
+        << b_col << "] ";
+    size_t top_len = ui_visible_len("WARDEN // ROOT SENTINEL CYBER-GRID ● LIVE INTERCEPT ") + 6;
     for (size_t i = top_len; i < BOX_WIDTH - 1; ++i) buf << "─";
-    buf << "╮\n";
+    buf << "┐\n";
 
     // Row 1: Vitals
     std::ostringstream r1;
-    r1 << s_col << "Uptime: " << v_col << uptime << "s"
-       << s_col << "  │  Roots: " << v_col << g_stats.dirs_watched
-       << s_col << "  │  Files: " << v_col << g_stats.baseline_files
-       << s_col << "  │  Workers: " << v_col << g_stats.worker_count
-       << s_col << "  │  Ingest Rate: " << v_col << std::fixed << std::setprecision(1) << eps << " ev/s";
+    r1 << s_col << "UPTIME: " << v_col << uptime << "s"
+       << s_col << " │ ROOTS: " << v_col << g_stats.dirs_watched
+       << s_col << " │ TARGETS: " << v_col << g_stats.baseline_files
+       << s_col << " │ DAEMONS: " << v_col << g_stats.worker_count
+       << s_col << " │ INGEST: " << "\033[1;38;5;202m" << std::fixed << std::setprecision(1) << eps << " ev/s";
     buf << b_col << "│  " << rst << ui_pad_right(r1.str(), BOX_WIDTH - 4) << b_col << "│\n";
 
     // Row 2: Queue Depth Gauge
@@ -397,22 +400,22 @@ void ui_render_dashboard() {
     size_t q_bar_len = 22;
     size_t filled = static_cast<size_t>(q_frac * q_bar_len);
 
-    std::string q_color = "\033[38;5;120m"; // Green
-    if (q_frac > 0.5f) q_color = "\033[38;5;215m"; // Orange
-    if (q_frac > 0.8f) q_color = "\033[38;5;203m"; // Red
+    std::string q_color = "\033[38;5;160m"; // Deep Red
+    if (q_frac > 0.5f) q_color = "\033[1;38;5;202m"; // Neon Orange-Red
+    if (q_frac > 0.8f) q_color = "\033[1;5;38;5;196m"; // Blinking Red Breach
 
-    r2 << s_col << "Queue: [" << q_color;
+    r2 << s_col << "PIPE: [" << q_color;
     for (size_t i = 0; i < q_bar_len; ++i) {
-        if (i < filled) r2 << "▰";
-        else r2 << "\033[38;5;238m▱";
+        if (i < filled) r2 << "█";
+        else r2 << "\033[38;5;52m░";
     }
     r2 << rst << s_col << "] " << v_col << g_stats.queue_depth << s_col << "/" << g_stats.queue_capacity
-       << s_col << "  │  Total Events Processed: " << v_col << g_stats.total_events;
+       << s_col << " │ INTERCEPTED: " << "\033[1;38;5;196m" << g_stats.total_events;
     buf << b_col << "│  " << rst << ui_pad_right(r2.str(), BOX_WIDTH - 4) << b_col << "│\n";
 
     // Divider: Statistics
-    buf << b_col << "├─ " << t_col << "Security Telemetry " << b_col;
-    size_t d1_len = ui_visible_len("Security Telemetry ") + 4;
+    buf << b_col << "├──[ " << t_col << "THREAT TELEMETRY & ATTACK VECTORS " << b_col << "] ";
+    size_t d1_len = ui_visible_len("THREAT TELEMETRY & ATTACK VECTORS ") + 6;
     for (size_t i = d1_len; i < BOX_WIDTH - 1; ++i) buf << "─";
     buf << "┤\n";
 
@@ -425,17 +428,17 @@ void ui_render_dashboard() {
 
     // Row 4: Event Types breakdown
     std::ostringstream r4;
-    r4 << "\033[38;5;120mCREATE:\033[0m " << v_col << g_stats.counts_by_type[CREATED]
-       << s_col << " │ \033[38;5;222mMODIFY:\033[0m " << v_col << g_stats.counts_by_type[MODIFIED]
-       << s_col << " │ \033[38;5;203mDELETE:\033[0m " << v_col << g_stats.counts_by_type[DELETED]
-       << s_col << " │ \033[38;5;183mMOVE:\033[0m " << v_col << g_stats.counts_by_type[MOVED]
-       << s_col << " │ \033[38;5;214mATTRIB:\033[0m " << v_col
+    r4 << "\033[1;38;5;196mINJECT:\033[0m " << v_col << g_stats.counts_by_type[CREATED]
+       << s_col << " │ \033[1;38;5;208mMUTATE:\033[0m " << v_col << g_stats.counts_by_type[MODIFIED]
+       << s_col << " │ \033[1;38;5;160mPURGE:\033[0m " << v_col << g_stats.counts_by_type[DELETED]
+       << s_col << " │ \033[1;38;5;203mHIJACK:\033[0m " << v_col << g_stats.counts_by_type[MOVED]
+       << s_col << " │ \033[1;38;5;197mPERMS:\033[0m " << v_col
        << (g_stats.counts_by_type[PERM_CHANGED] + g_stats.counts_by_type[OWNER_CHANGED]);
     buf << b_col << "│  " << rst << ui_pad_right(r4.str(), BOX_WIDTH - 4) << b_col << "│\n";
 
     // Divider: Live Alerts
-    buf << b_col << "├─ " << t_col << "Live Activity Feed (Last 10 Events) " << b_col;
-    size_t d2_len = ui_visible_len("Live Activity Feed (Last 10 Events) ") + 4;
+    buf << b_col << "├──[ " << t_col << "REALTIME INTRUSION FEED (LAST 10 SIGNALS) " << b_col << "] ";
+    size_t d2_len = ui_visible_len("REALTIME INTRUSION FEED (LAST 10 SIGNALS) ") + 6;
     for (size_t i = d2_len; i < BOX_WIDTH - 1; ++i) buf << "─";
     buf << "┤\n";
 
@@ -447,22 +450,22 @@ void ui_render_dashboard() {
             std::string time_ago = ui_human_time_ago(a.ev.timestamp);
             a_line << ui_badge(a.severity) << " "
                    << ui_event_badge(a.ev.type) << " "
-                   << v_col << ui_truncate_path(a.ev.path, 34) << rst;
+                   << "\033[38;5;255m" << ui_truncate_path(a.ev.path, 34) << rst;
             if (!a.detail.empty()) {
-                a_line << s_col << " (" << ui_truncate_path(a.detail, 20) << ")" << rst;
+                a_line << " \033[38;5;203m(" << ui_truncate_path(a.detail, 20) << ")" << rst;
             }
-            a_line << s_col << " " << std::right << std::setw(6) << time_ago << rst;
+            a_line << " \033[38;5;88m" << std::right << std::setw(6) << time_ago << rst;
         } else {
-            a_line << s_col << "•";
+            a_line << s_col << "• NO ANOMALY";
         }
         buf << b_col << "│  " << rst << ui_pad_right(a_line.str(), BOX_WIDTH - 4) << b_col << "│\n";
     }
 
     // Bottom border with interactive controls
-    buf << b_col << "╰";
-    for (size_t i = 1; i < BOX_WIDTH - 1; ++i) buf << "─";
-    buf << "╯\n";
-    buf << "  \033[38;5;244m[Ctrl+C] Clean Shutdown  │  [SIGHUP] Reload Config  │  [SIGUSR1] Stats Dump\033[0m\033[K\n";
+    buf << b_col << "└──";
+    for (size_t i = 3; i < BOX_WIDTH - 1; ++i) buf << "─";
+    buf << "┘\n";
+    buf << "  \033[1;38;5;196m[CTRL+C]\033[38;5;88m ABORT MISSION  │  \033[1;38;5;202m[SIGHUP]\033[38;5;88m RE-HASH  │  \033[1;38;5;160m[SIGUSR1]\033[38;5;88m DUMP TELEMETRY\033[0m\033[K\n";
 
     std::cout << buf.str() << std::flush;
     pthread_mutex_unlock(&g_stats.mutex);
