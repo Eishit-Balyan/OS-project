@@ -1,4 +1,4 @@
-# Warden
+# Warden.
 
 Warden is a real-time file integrity monitoring and tamper detection daemon for Linux. It combines POSIX filesystem metadata observation, recursive directory inotify event streaming, OpenSSL cryptographic baseline verification, multithreaded worker pools, and sliding-window anomaly analysis.
 
@@ -90,7 +90,7 @@ make clean      # Remove all build artifacts and binaries
 ```bash
 ./warden events --severity CRITICAL
 ./warden events --type MODIFIED --since 30m
-./warden events --path /etc --limit 20 --tail
+./warden events --path /etc --limit 20 --tail.
 ```
 
 ### Decoupled Forensic Web Ledger
